@@ -12,6 +12,8 @@ void ofApp::setup(){
 	circles[0].setup(true);
 	circles[1].setup(true);
 	circles[2].setup(true);
+
+	circle.setup(ofGetWindowWidth() / 2 + ofGetWindowWidth() / 4, ofGetWindowHeight() / 4, 35);
 }
 
 //--------------------------------------------------------------
@@ -23,9 +25,12 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(ofColor::black);
 
-	for (auto circle : circles) {
-		circle.draw();
+	for (auto g_circle : circles) {
+		g_circle.draw();
 	}
+
+	ofSetColor(ofColor::white);
+	circle.draw();
 }
 
 //--------------------------------------------------------------

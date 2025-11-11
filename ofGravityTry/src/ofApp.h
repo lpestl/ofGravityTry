@@ -1,5 +1,6 @@
 #pragma once
 
+#include "circle.h"
 #include "ofMain.h"
 #include "shapes/ofGradientCircle.h"
 
@@ -9,9 +10,6 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
-		void loadShader();
-		void createCircleMesh();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -27,4 +25,5 @@ class ofApp : public ofBaseApp{
 
 	private:
 		std::vector<ofGradientCircle> circles;
+		circle circle;
 };
