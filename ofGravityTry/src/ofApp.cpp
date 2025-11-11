@@ -5,18 +5,35 @@ void ofApp::setup(){
 	ofSetWindowTitle("Circles");
 	ofSetFrameRate(60);
 
-	circles.push_back(ofMovingCircle(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2, 100, ofColor::blue));
-	circles.push_back(ofMovingCircle(ofGetWindowWidth() / 4, ofGetWindowHeight() / 4, 50, ofColor::white));
-	circles.push_back(ofMovingCircle(ofGetWindowWidth() / 2 + ofGetWindowWidth() / 4, ofGetWindowHeight() / 2 + ofGetWindowHeight() / 4, 30, ofColor::red));
+	circles.push_back(ofMovingCircle());
+	circles.push_back(ofMovingCircle());
+	circles.push_back(ofMovingCircle());
 
-	// Set initial acceleration for the circles
-	circles[0].setAcceleration(ofVec2f(0, 2.0f));
-	circles[1].setAcceleration(ofVec2f(0, 1.5f));
-	circles[2].setAcceleration(ofVec2f(0, 1.0f));
+	circles[0].setup(
+		ofGetWindowWidth() / 2,
+		ofGetWindowHeight() / 2,
+		100,
+		ofColor::blue,
+		ofVec2f(0.f, 0.f),
+		ofVec2f(0, 2.0f)
+	);
 
-	circles[0].setup();
-	circles[1].setup();
-	circles[2].setup();
+	circles[1].setup(
+		ofGetWindowWidth() / 4,
+		ofGetWindowHeight() / 4,
+		50,
+		ofColor::white,
+		ofVec2f(0.f, 0.f),
+		ofVec2f(0, 1.5f)
+	);
+	
+	circles[2].setup(
+		ofGetWindowWidth() / 2 + ofGetWindowWidth() / 4,
+		ofGetWindowHeight() / 2 + ofGetWindowHeight() / 4,
+		30, ofColor::red,
+		ofVec2f(0, 0),
+		ofVec2f(0, 1.f)
+	);
 }
 
 //--------------------------------------------------------------

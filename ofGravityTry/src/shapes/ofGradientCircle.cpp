@@ -1,57 +1,56 @@
 ﻿#include "ofGradientCircle.h"
 
-ofGradientCircle::ofGradientCircle()
-	: circle(0.0f, 0.0f, 100.0f)
-	, _color(255, 0, 0, 255)
-	, _useShader(true)
-{
-}
-
-ofGradientCircle::ofGradientCircle(float x, float y, float radius, const ofColor & circleColor)
-	: circle(x, y, radius)
-	, _color(circleColor)
-	, _useShader(true)
-{
-}
-
 ofGradientCircle::~ofGradientCircle()
 {
 }
 
-void ofGradientCircle::setup(bool useShader) {
-	_useShader = useShader;
-	if (_useShader) {
-		// Загружаем шейдер для градиента
-		string fragmentShader = R"(
-            #version 120
+void ofGradientCircle::setup(float x, float y, float radius, const ofColor& color)
+{
+	circle::setup(x, y, radius);
+	setup(color);
+}
 
-            uniform vec2 u_center;
-            uniform float u_radius;
-            uniform vec4 u_color;
+void ofGradientCircle::setup(float x, float y, float radius)
+{
+	circle::setup(x, y, radius);
+	setup(ofColor(0, 0, 255, 255));
+}
 
-            void main() {
-                // Вычисляем расстояние от центра
-                vec2 position = gl_TexCoord[0].xy;
-                float distance = length(position - u_center);
+void ofGradientCircle::setup(const ofColor& color)
+{
+	_color = color;
+	setup();
+}
 
-                // Нормализуем расстояние
-                float normalizedDistance = clamp(distance / u_radius, 0.0, 1.0);
+void ofGradientCircle::setup() {	
+	// Загружаем шейдер для градиента
+	string fragmentShader = R"(
+        #version 120
 
-                // Вычисляем альфа-канал (1 в центре, 0 на краю)
-                float alpha = 1.0 - normalizedDistance;
+        uniform vec2 u_center;
+        uniform float u_radius;
+        uniform vec4 u_color;
 
-                // Применяем цвет с градиентной прозрачностью
-                gl_FragColor = vec4(u_color.rgb, u_color.a * alpha);
-            }
-        )";
+        void main() {
+            // Вычисляем расстояние от центра
+            vec2 position = gl_TexCoord[0].xy;
+            float distance = length(position - u_center);
 
-		_gradientShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader);
-		_gradientShader.linkProgram();
+            // Нормализуем расстояние
+            float normalizedDistance = clamp(distance / u_radius, 0.0, 1.0);
 
-		createCircleMesh();
-	} else {
-		createGradientTexture();
-	}
+            // Вычисляем альфа-канал (1 в центре, 0 на краю)
+            float alpha = 1.0 - normalizedDistance;
+
+            // Применяем цвет с градиентной прозрачностью
+            gl_FragColor = vec4(u_color.rgb, u_color.a * alpha);
+        }
+    )";
+
+	_gradientShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader);
+	_gradientShader.linkProgram();
+
+	createCircleMesh();
 }
 
 void ofGradientCircle::update() {
@@ -60,76 +59,32 @@ void ofGradientCircle::update() {
 }
 
 void ofGradientCircle::draw() {
-	if (_useShader) {
-		// Шейдерная версия - более плавная и эффективная
-		_gradientShader.begin();
+	// Шейдерная версия - более плавная и эффективная
+	_gradientShader.begin();
 
-		_gradientShader.setUniform2f("u_center", 0.5, 0.5);
-		_gradientShader.setUniform1f("u_radius", 0.5);
-		_gradientShader.setUniform4f("u_color",
-			_color.r / 255.0f,
-			_color.g / 255.0f,
-			_color.b / 255.0f,
-			_color.a / 255.0f);
+	_gradientShader.setUniform2f("u_center", 0.5, 0.5);
+	_gradientShader.setUniform1f("u_radius", 0.5);
+	_gradientShader.setUniform4f("u_color",
+		_color.r / 255.0f,
+		_color.g / 255.0f,
+		_color.b / 255.0f,
+		_color.a / 255.0f);
 
-		ofPushMatrix();
-		ofTranslate(getPosition().x, getPosition().y);
-		_circleMesh.draw();
-		ofPopMatrix();
+	ofPushMatrix();
+	ofTranslate(getPosition().x, getPosition().y);
+	_circleMesh.draw();
+	ofPopMatrix();
 
-		_gradientShader.end();
-	} else {
-		// Версия с текстурой
-		ofSetColor(255, 255, 255, 255);
-		_gradientTexture.draw(getPosition().x - getRadius(), getPosition().y - getRadius());
-	}
+	_gradientShader.end();
 }
 
 void ofGradientCircle::setColor(const ofColor & newColor) {
 	_color = newColor;
-	if (_useShader) {
-		createCircleMesh();
-	} else {
-		createGradientTexture();
-	}
+	createCircleMesh();
 }
 
 ofColor ofGradientCircle::getColor() const {
 	return _color;
-}
-
-void ofGradientCircle::createGradientTexture() {
-	ofImage gradientImage;
-	int size = getRadius() * 2;
-	gradientImage.allocate(size, size, OF_IMAGE_COLOR_ALPHA);
-
-	ofColor centerColor = _color;
-	centerColor.a = 255;
-
-	ofColor edgeColor = _color;
-	edgeColor.a = 0;
-
-	float centerX = size / 2.0f;
-	float centerY = size / 2.0f;
-
-	for (int y = 0; y < size; y++) {
-		for (int x = 0; x < size; x++) {
-			float dx = x - centerX;
-			float dy = y - centerY;
-			float distance = sqrt(dx * dx + dy * dy);
-			float normalizedDistance = ofClamp(distance / getRadius(), 0.0f, 1.0f);
-
-			ofColor pixelColor;
-			pixelColor.r = ofLerp(centerColor.r, edgeColor.r, normalizedDistance);
-			pixelColor.g = ofLerp(centerColor.g, edgeColor.g, normalizedDistance);
-			pixelColor.b = ofLerp(centerColor.b, edgeColor.b, normalizedDistance);
-			pixelColor.a = ofLerp(centerColor.a, edgeColor.a, normalizedDistance);
-
-			gradientImage.setColor(x, y, pixelColor);
-		}
-	}
-
-	_gradientTexture.loadData(gradientImage);
 }
 
 void ofGradientCircle::createCircleMesh() {

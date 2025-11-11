@@ -1,25 +1,26 @@
 #include "ofMovingCircle.h"
 
-ofMovingCircle::ofMovingCircle()
-	: ofGradientCircle(0.0f, 0.0f, 100.0f, ofColor(255, 0, 0, 255))
-	, _speed(ofVec2f(0.0f, 0.0f))
-	, _acceleration(ofVec2f(0.0f, 0.0f))
-{
-}
-
-ofMovingCircle::ofMovingCircle(float x, float y, float radius, const ofColor & color)
-	: ofGradientCircle(x, y, radius, color)
-	, _speed(ofVec2f(0.0f, 0.0f))
-	, _acceleration(ofVec2f(0.0f, 0.0f))
-{
-}
-
 ofMovingCircle::~ofMovingCircle()
 {
 }
 
+void ofMovingCircle::setup(float x, float y, float radius, const ofColor& color, const ofVec2f& speed,
+	const ofVec2f& acceleration)
+{
+	ofGradientCircle::setup(x, y, radius, color);
+	_speed = speed;
+	_acceleration = acceleration;
+}
+
+void ofMovingCircle::setup(const ofVec2f& speed, const ofVec2f& acceleration)
+{
+	ofGradientCircle::setup();
+	_speed = speed;
+	_acceleration = acceleration;
+}
+
 void ofMovingCircle::setup() {
-	ofGradientCircle::setup(true);
+	ofGradientCircle::setup();
 }
 
 void ofMovingCircle::update() {

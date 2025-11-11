@@ -1,18 +1,5 @@
 ﻿#include "circle.h"
 
-circle::circle()
-    : _position(ofVec2f(0, 0))
-    , _radius(100.f)
-{
-}
-
-//--------------------------------------------------------------
-circle::circle(float x, float y, float radius)
-    : _position(ofVec2f(x, y))
-    , _radius(radius)
-{
-}
-
 //--------------------------------------------------------------
 circle::~circle()
 {
@@ -23,6 +10,10 @@ void circle::setup(float x, float y, float radius)
 {
     _position = ofVec2f(x, y);
     _radius = radius;
+}
+
+void circle::setup()
+{
 }
 
 //--------------------------------------------------------------

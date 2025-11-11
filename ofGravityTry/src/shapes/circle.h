@@ -5,11 +5,10 @@
 class circle
 {
 public:
-    circle();
-    circle(float x, float y, float radius);
     virtual ~circle();
 
     virtual void setup(float x, float y, float radius);
+    virtual void setup();
     virtual void update();
     virtual void draw();
 
@@ -21,6 +20,6 @@ public:
     ofVec2f getPosition() const;
 
 private:
-    ofVec2f _position;
-    float _radius;
+    ofVec2f _position {};
+    float _radius { 100.f };
 };
