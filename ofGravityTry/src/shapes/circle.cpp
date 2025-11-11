@@ -49,6 +49,11 @@ float circle::getRadius() const
     return _radius;
 }
 
+void circle::setPosition(ofVec2f position)
+{
+    _position = position;
+}
+
 //--------------------------------------------------------------
 void circle::setPosition(float x, float y)
 {

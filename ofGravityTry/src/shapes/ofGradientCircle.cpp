@@ -1,19 +1,21 @@
 ﻿#include "ofGradientCircle.h"
 
 ofGradientCircle::ofGradientCircle()
-	: _posX(0.0f)
-	, _posY(0.0f)
-	, _radius(100.0f)
+	: circle(0.0f, 0.0f, 100.0f)
 	, _color(255, 0, 0, 255)
-	, _useShader(true) {
+	, _useShader(true)
+{
 }
 
 ofGradientCircle::ofGradientCircle(float x, float y, float radius, const ofColor & circleColor)
-	: _useShader(true) {
-	_posX = x;
-	_posY = y;
-	_radius = radius;
-	_color = circleColor;
+	: circle(x, y, radius)
+	, _color(circleColor)
+	, _useShader(true)
+{
+}
+
+ofGradientCircle::~ofGradientCircle()
+{
 }
 
 void ofGradientCircle::setup(bool useShader) {
@@ -52,7 +54,10 @@ void ofGradientCircle::setup(bool useShader) {
 	}
 }
 
-void ofGradientCircle::update() {}
+void ofGradientCircle::update() {
+    // Move the circle down
+    setPosition(getPosition().x, getPosition().y + 1.0f);
+}
 
 void ofGradientCircle::draw() {
 	if (_useShader) {
@@ -68,7 +73,7 @@ void ofGradientCircle::draw() {
 			_color.a / 255.0f);
 
 		ofPushMatrix();
-		ofTranslate(_posX, _posY);
+		ofTranslate(getPosition().x, getPosition().y);
 		_circleMesh.draw();
 		ofPopMatrix();
 
@@ -76,30 +81,8 @@ void ofGradientCircle::draw() {
 	} else {
 		// Версия с текстурой
 		ofSetColor(255, 255, 255, 255);
-		_gradientTexture.draw(_posX - _radius, _posY - _radius);
+		_gradientTexture.draw(getPosition().x - getRadius(), getPosition().y - getRadius());
 	}
-}
-
-void ofGradientCircle::setRadius(float newRadius) {
-	_radius = newRadius;
-	if (_useShader) {
-		createCircleMesh();
-	} else {
-		createGradientTexture();
-	}
-}
-
-float ofGradientCircle::getRadius() const {
-	return _radius;
-}
-
-void ofGradientCircle::setPosition(float x, float y) {
-	_posX = x;
-	_posY = y;
-}
-
-ofVec2f ofGradientCircle::getPosition() const {
-    return ofVec2f(_posX, _posY);
 }
 
 void ofGradientCircle::setColor(const ofColor & newColor) {
@@ -117,7 +100,7 @@ ofColor ofGradientCircle::getColor() const {
 
 void ofGradientCircle::createGradientTexture() {
 	ofImage gradientImage;
-	int size = _radius * 2;
+	int size = getRadius() * 2;
 	gradientImage.allocate(size, size, OF_IMAGE_COLOR_ALPHA);
 
 	ofColor centerColor = _color;
@@ -134,7 +117,7 @@ void ofGradientCircle::createGradientTexture() {
 			float dx = x - centerX;
 			float dy = y - centerY;
 			float distance = sqrt(dx * dx + dy * dy);
-			float normalizedDistance = ofClamp(distance / _radius, 0.0f, 1.0f);
+			float normalizedDistance = ofClamp(distance / getRadius(), 0.0f, 1.0f);
 
 			ofColor pixelColor;
 			pixelColor.r = ofLerp(centerColor.r, edgeColor.r, normalizedDistance);
@@ -164,10 +147,7 @@ void ofGradientCircle::createCircleMesh() {
 		float x = cos(angle);
 		float y = sin(angle);
 
-		_circleMesh.addVertex(ofVec3f(x * _radius, y * _radius, 0));
+		_circleMesh.addVertex(ofVec3f(x * getRadius(), y * getRadius(), 0));
 		_circleMesh.addTexCoord(ofVec2f((x + 1) * 0.5, (y + 1) * 0.5));
 	}
 }
-
-
-

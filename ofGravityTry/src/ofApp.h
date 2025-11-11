@@ -3,6 +3,7 @@
 #include "circle.h"
 #include "ofMain.h"
 #include "shapes/ofGradientCircle.h"
+#include "shapes/ofMovingCircle.h"
 
 class ofApp : public ofBaseApp{
 
@@ -24,6 +25,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 	private:
-		std::vector<ofGradientCircle> circles;
-		circle circle;
+		std::vector<ofMovingCircle> circles;
 };
