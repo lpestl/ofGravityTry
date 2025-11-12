@@ -2,6 +2,7 @@
 
 #include "circle.h"
 #include "ofMain.h"
+#include "ofPhysicalSpace.h"
 #include "shapes/ofGradientCircle.h"
 #include "shapes/ofMovingCircle.h"
 
@@ -25,5 +26,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 	private:
-		std::vector<ofMovingCircle> circles;
+		ofPhysicalSpace _physicalSpace;
 };

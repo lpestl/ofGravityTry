@@ -5,11 +5,10 @@ void ofApp::setup(){
 	ofSetWindowTitle("Circles");
 	ofSetFrameRate(60);
 
-	circles.push_back(ofMovingCircle());
-	circles.push_back(ofMovingCircle());
-	//circles.push_back(ofMovingCircle());
+	auto blueCircle = ofPhysicalCircle();
+	auto whiteCircle = ofPhysicalCircle();
 
-	circles[0].setup(
+	blueCircle.setup(
 		ofGetWindowWidth() / 2,
 		ofGetWindowHeight() / 2,
 		50,
@@ -18,7 +17,7 @@ void ofApp::setup(){
 		ofVec2f(50.f, 0.0f)
 	);
 
-	circles[1].setup(
+	whiteCircle.setup(
 		ofGetWindowWidth() / 4 * 3,
 		ofGetWindowHeight() / 2,
 		25,
@@ -26,22 +25,20 @@ void ofApp::setup(){
 		ofVec2f(10.f, 50.f),
 		ofVec2f(0.f, 50.f)
 	);
+	
+	_physicalSpace.setup();
+	_physicalSpace.addObject(blueCircle);
+	_physicalSpace.addObject(whiteCircle);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	for (auto& g_circle : circles) {
-		g_circle.update();
-	}
+	_physicalSpace.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(ofColor::black);
-
-	for (auto& g_circle : circles) {
-		g_circle.draw();
-	}
+	_physicalSpace.draw();
 }
 
 //--------------------------------------------------------------
