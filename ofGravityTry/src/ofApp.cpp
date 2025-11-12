@@ -6,34 +6,26 @@ void ofApp::setup(){
 	ofSetFrameRate(60);
 
 	circles.push_back(ofMovingCircle());
-	/*circles.push_back(ofMovingCircle());
-	circles.push_back(ofMovingCircle());*/
+	circles.push_back(ofMovingCircle());
+	//circles.push_back(ofMovingCircle());
 
 	circles[0].setup(
 		ofGetWindowWidth() / 2,
 		ofGetWindowHeight() / 2,
-		100,
+		50,
 		ofColor::blue,
-		ofVec2f(2.f, 0.f),
-		ofVec2f(0.0f, 2.0f)
+		ofVec2f(50.f, 10.f),
+		ofVec2f(50.f, 0.0f)
 	);
 
-	/*circles[1].setup(
-		ofGetWindowWidth() / 4,
-		ofGetWindowHeight() / 4,
-		50,
+	circles[1].setup(
+		ofGetWindowWidth() / 4 * 3,
+		ofGetWindowHeight() / 2,
+		25,
 		ofColor::white,
-		ofVec2f(0.f, 0.f),
-		ofVec2f(-0.1, 1.5f)
+		ofVec2f(10.f, 50.f),
+		ofVec2f(0.f, 50.f)
 	);
-	
-	circles[2].setup(
-		ofGetWindowWidth() / 2 + ofGetWindowWidth() / 4,
-		ofGetWindowHeight() / 2 + ofGetWindowHeight() / 4,
-		30, ofColor::red,
-		ofVec2f(0, 0),
-		ofVec2f(-0.1, -0.5f)
-	);*/
 }
 
 //--------------------------------------------------------------
