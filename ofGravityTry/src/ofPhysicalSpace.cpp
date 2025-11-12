@@ -72,23 +72,26 @@ void ofPhysicalSpace::drawTrajectories()
     const float timeStep = 1.0f / 60.0f; // Assume 60 FPS
     
     for (const auto& object : _objects) {
-        std::vector<ofVec2f> trajectory = predictTrajectory(object, predictionSteps);
+        if (object.isDebug())
+        {
+            std::vector<ofVec2f> trajectory = predictTrajectory(object, predictionSteps);
         
-        // Set color based on object color
-        ofColor trajectoryColor = object.getColor();
-        trajectoryColor.a = 100; // Semi-transparent
-        ofSetColor(trajectoryColor);
+            // Set color based on object color
+            ofColor trajectoryColor = object.getColor();
+            trajectoryColor.a = 100; // Semi-transparent
+            ofSetColor(trajectoryColor);
         
-        // Draw trajectory lines
-        ofSetLineWidth(2);
-        for (size_t i = 0; i < trajectory.size() - 1; ++i) {
-            ofDrawLine(trajectory[i], trajectory[i + 1]);
-        }
+            // Draw trajectory lines
+            ofSetLineWidth(2);
+            for (size_t i = 0; i < trajectory.size() - 1; ++i) {
+                ofDrawLine(trajectory[i], trajectory[i + 1]);
+            }
         
-        // Draw prediction points
-        ofSetColor(trajectoryColor);
-        for (size_t i = 0; i < trajectory.size(); i += 5) { // Draw every 5th point
-            ofDrawCircle(trajectory[i], 2);
+            // Draw prediction points
+            ofSetColor(trajectoryColor);
+            for (size_t i = 0; i < trajectory.size(); i += 5) { // Draw every 5th point
+                ofDrawCircle(trajectory[i], 2);
+            }
         }
     }
 }

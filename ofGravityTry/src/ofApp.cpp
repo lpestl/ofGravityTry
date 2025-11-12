@@ -17,7 +17,7 @@ void ofApp::setup(){
 		ofColor::blue,
 		ofVec2f(0.f, 0.f),  // Start with no initial speed
 		ofVec2f(0.f, 0.0f), // Start with no acceleration
-		5000.0f              // High mass
+		50000.0f              // High mass
 	);
 
 	// Medium white circle with medium mass
@@ -46,6 +46,24 @@ void ofApp::setup(){
 	_physicalSpace.addObject(blueCircle);
 	_physicalSpace.addObject(whiteCircle);
 	_physicalSpace.addObject(redCircle);
+
+	for (int i = 0; i < 50; ++i)
+	{
+		auto circle = ofPhysicalCircle();
+		circle.setup(
+			ofRandom(ofGetWindowWidth()),
+			ofRandom(ofGetWindowHeight()),
+			ofRandom(50),
+			ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255),
+			ofVec2f(ofRandom(-100, 100), ofRandom(-100, 100)),
+			ofVec2f(0.f, 0.f),
+			ofRandom(50.f)
+		);
+		auto weight = ofRandom(20.f);
+		if (weight > 1.f)
+			circle.setDebug(false);
+		_physicalSpace.addObject(circle);
+	}
 }
 
 //--------------------------------------------------------------

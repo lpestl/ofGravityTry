@@ -39,23 +39,23 @@ void ofMovingCircle::update() {
 	ofVec2f pos = getPosition();
 	if (pos.y > bottomBound) {
 		// Reverse the vertical speed when we hit the bottom
-		_speed.y = -_speed.y;		
+		_speed.y = -_speed.y / 2.f;		
 		// Set position to the bottom
 		setPosition(pos.x, bottomBound);
 	}
 	if (pos.y < topBound)
 	{
-		_speed.y = -_speed.y;
+		_speed.y = -_speed.y / 2.f;
 		setPosition(pos.x, topBound);
 	}
 	if (pos.x > rightBound)
 	{
-		_speed.x = -_speed.x;
+		_speed.x = -_speed.x / 2.f;
 		setPosition(rightBound, pos.y);
 	}
 	if (pos.x < leftBound)
 	{
-		_speed.x = -_speed.x;
+		_speed.x = -_speed.x / 2.f;
 		setPosition(leftBound, pos.y);
 	}
 }
