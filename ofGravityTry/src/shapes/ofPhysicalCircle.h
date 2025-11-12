@@ -17,5 +17,4 @@ public:
     
 private:
     float _mass { 1.0f };
-    
 };

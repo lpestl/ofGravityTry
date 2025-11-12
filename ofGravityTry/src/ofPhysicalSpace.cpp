@@ -33,6 +33,10 @@ void ofPhysicalSpace::draw()
 {
     ofBackground(ofColor::black);
 
+    // Draw trajectories first (behind the circles)
+    drawTrajectories();
+
+    // Draw the circles on top
     for (auto& object : _objects) {
         object.draw();
     }
@@ -60,4 +64,75 @@ ofVec2f ofPhysicalSpace::calculateGravitationalForce(const ofPhysicalCircle& obj
     // Normalize direction and scale by force magnitude
     direction.normalize();
     return direction * forceMagnitude;
+}
+
+void ofPhysicalSpace::drawTrajectories()
+{
+    const int predictionSteps = 500; // Predict 100 frames ahead
+    const float timeStep = 1.0f / 60.0f; // Assume 60 FPS
+    
+    for (const auto& object : _objects) {
+        std::vector<ofVec2f> trajectory = predictTrajectory(object, predictionSteps);
+        
+        // Set color based on object color
+        ofColor trajectoryColor = object.getColor();
+        trajectoryColor.a = 100; // Semi-transparent
+        ofSetColor(trajectoryColor);
+        
+        // Draw trajectory lines
+        ofSetLineWidth(2);
+        for (size_t i = 0; i < trajectory.size() - 1; ++i) {
+            ofDrawLine(trajectory[i], trajectory[i + 1]);
+        }
+        
+        // Draw prediction points
+        ofSetColor(trajectoryColor);
+        for (size_t i = 0; i < trajectory.size(); i += 5) { // Draw every 5th point
+            ofDrawCircle(trajectory[i], 2);
+        }
+    }
+}
+
+std::vector<ofVec2f> ofPhysicalSpace::predictTrajectory(const ofPhysicalCircle& object, int steps) const
+{
+    std::vector<ofVec2f> trajectory;
+    trajectory.reserve(steps + 1);
+    
+    // Start with current position
+    trajectory.push_back(object.getPosition());
+    
+    // Create a copy of the object for simulation
+    ofPhysicalCircle simulatedObject = object;
+    
+    // Simulate future positions
+    for (int i = 0; i < steps; ++i) {
+        // Reset acceleration
+        simulatedObject.setAcceleration(ofVec2f(0.0f, 0.0f));
+        
+        // Calculate gravitational forces from all other objects
+        for (const auto& otherObject : _objects) {
+            if (&object != &otherObject) {
+                ofVec2f force = calculateGravitationalForce(simulatedObject, otherObject);
+                simulatedObject.applyForce(force);
+            }
+        }
+        
+        // Update position and speed using Euler integration
+        ofVec2f acceleration = simulatedObject.getAcceleration();
+        ofVec2f speed = simulatedObject.getSpeed();
+        
+        // Update speed: v = v0 + a * dt
+        speed += acceleration * ofGetLastFrameTime();
+        simulatedObject.setSpeed(speed);
+        
+        // Update position: p = p0 + v * dt
+        ofVec2f position = simulatedObject.getPosition();
+        position += speed * ofGetLastFrameTime();
+        simulatedObject.setPosition(position);
+        
+        // Add to trajectory
+        trajectory.push_back(position);
+    }
+    
+    return trajectory;
 }

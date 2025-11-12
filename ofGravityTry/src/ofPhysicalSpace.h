@@ -18,4 +18,6 @@ private:
     float _gravitationalConstant { 1000.0f }; // Adjusted for visual effect
     
     ofVec2f calculateGravitationalForce(const ofPhysicalCircle& obj1, const ofPhysicalCircle& obj2) const;
+    void drawTrajectories();
+    std::vector<ofVec2f> predictTrajectory(const ofPhysicalCircle& object, int steps) const;
 };
