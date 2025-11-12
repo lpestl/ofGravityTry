@@ -13,7 +13,7 @@ void ofApp::setup(){
 	blueCircle.setup(
 		ofGetWindowWidth() / 2,
 		ofGetWindowHeight() / 2,
-		50,
+		100,
 		ofColor::blue,
 		ofVec2f(0.f, 0.f),  // Start with no initial speed
 		ofVec2f(0.f, 0.0f), // Start with no acceleration
@@ -22,24 +22,24 @@ void ofApp::setup(){
 
 	// Medium white circle with medium mass
 	whiteCircle.setup(
-		ofGetWindowWidth() / 4 * 3,
+		ofGetWindowWidth() / 2 + ofGetWindowHeight() / 6,
 		ofGetWindowHeight() / 2,
-		25,
+		10,
 		ofColor::white,
-		ofVec2f(0.f, 80.f),  // Initial orbital speed
+		ofVec2f(0.f, 200.f),  // Initial orbital speed
 		ofVec2f(0.f, 0.f),
 		10.0f
 	);
 	
 	// Small red circle with low mass
 	redCircle.setup(
-		ofGetWindowWidth() / 4,
+		ofGetWindowWidth() / 2 - ofGetWindowHeight() / 6 * 2,
 		ofGetWindowHeight() / 2,
-		15,
+		25,
 		ofColor::red,
-		ofVec2f(0.f, -60.f), // Initial orbital speed in opposite direction
+		ofVec2f(0.f, -150.f), // Initial orbital speed in opposite direction
 		ofVec2f(0.f, 0.f),
-		50.0f
+		25.0f
 	);
 	
 	_physicalSpace.setup();
