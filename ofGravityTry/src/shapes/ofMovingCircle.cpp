@@ -30,15 +30,33 @@ void ofMovingCircle::update() {
 	// Update position based on speed
 	setPosition(getPosition() + _speed);
 
+	auto bottomBound = ofGetWindowHeight() - getRadius();
+	auto topBound = 0 + getRadius();
+	auto leftBound = 0 + getRadius();
+	auto rightBound = ofGetWindowWidth() - getRadius();
+	
 	// Check if we've reached the bottom of the window
 	ofVec2f pos = getPosition();
-	if (pos.y > ofGetWindowHeight() - getRadius()) {
+	if (pos.y > bottomBound) {
 		// Reverse the vertical speed when we hit the bottom
-		_speed.y = -_speed.y;
-		// Stop horizontal movement
-		_speed.x = 0;
+		_speed.y = -_speed.y;		
 		// Set position to the bottom
-		setPosition(pos.x, ofGetWindowHeight() - getRadius());
+		setPosition(pos.x, bottomBound);
+	}
+	if (pos.y < topBound)
+	{
+		_speed.y = -_speed.y;
+		setPosition(pos.x, topBound);
+	}
+	if (pos.x > rightBound)
+	{
+		_speed.x = -_speed.x;
+		setPosition(rightBound, pos.y);
+	}
+	if (pos.x < leftBound)
+	{
+		_speed.x = -_speed.x;
+		setPosition(leftBound, pos.y);
 	}
 }
 
