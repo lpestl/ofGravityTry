@@ -6,9 +6,14 @@ class ofPhysicalCircle : public ofMovingCircle
 {
 public:
     virtual void setup(float x, float y, float radius, const ofColor& color, const ofVec2f& speed, const ofVec2f& acceleration);
+    virtual void setup(float x, float y, float radius, const ofColor& color, const ofVec2f& speed, const ofVec2f& acceleration, float mass);
     virtual void setup() override;
     virtual void update() override;
     virtual void draw() override;
+    
+    float getMass() const;
+    void setMass(float mass);
+    void applyForce(const ofVec2f& force);
     
 private:
     float _mass { 1.0f };

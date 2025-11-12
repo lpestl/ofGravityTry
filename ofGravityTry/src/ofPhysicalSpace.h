@@ -15,4 +15,7 @@ public:
     
 private:
     std::vector<ofPhysicalCircle> _objects;
+    float _gravitationalConstant { 1000.0f }; // Adjusted for visual effect
+    
+    ofVec2f calculateGravitationalForce(const ofPhysicalCircle& obj1, const ofPhysicalCircle& obj2) const;
 };

@@ -2,33 +2,50 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofSetWindowTitle("Circles");
+	ofSetWindowTitle("Gravitational Circles");
 	ofSetFrameRate(60);
 
 	auto blueCircle = ofPhysicalCircle();
 	auto whiteCircle = ofPhysicalCircle();
+	auto redCircle = ofPhysicalCircle();
 
+	// Large blue circle with high mass
 	blueCircle.setup(
 		ofGetWindowWidth() / 2,
 		ofGetWindowHeight() / 2,
 		50,
 		ofColor::blue,
-		ofVec2f(50.f, 10.f),
-		ofVec2f(50.f, 0.0f)
+		ofVec2f(0.f, 0.f),  // Start with no initial speed
+		ofVec2f(0.f, 0.0f), // Start with no acceleration
+		5000.0f              // High mass
 	);
 
+	// Medium white circle with medium mass
 	whiteCircle.setup(
 		ofGetWindowWidth() / 4 * 3,
 		ofGetWindowHeight() / 2,
 		25,
 		ofColor::white,
-		ofVec2f(10.f, 50.f),
-		ofVec2f(0.f, 50.f)
+		ofVec2f(0.f, 80.f),  // Initial orbital speed
+		ofVec2f(0.f, 0.f),
+		10.0f
+	);
+	
+	// Small red circle with low mass
+	redCircle.setup(
+		ofGetWindowWidth() / 4,
+		ofGetWindowHeight() / 2,
+		15,
+		ofColor::red,
+		ofVec2f(0.f, -60.f), // Initial orbital speed in opposite direction
+		ofVec2f(0.f, 0.f),
+		50.0f
 	);
 	
 	_physicalSpace.setup();
 	_physicalSpace.addObject(blueCircle);
 	_physicalSpace.addObject(whiteCircle);
+	_physicalSpace.addObject(redCircle);
 }
 
 //--------------------------------------------------------------

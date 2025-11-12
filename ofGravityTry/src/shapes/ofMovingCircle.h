@@ -12,13 +12,12 @@ public:
 	virtual void update() override;
 	virtual void draw() override;
 
-    ofVec2f getSpeed() const;
-    ofVec2f getAcceleration() const;
-
 	bool isDebug() const;
 	void setDebug(bool debug);
 
-protected:
+	ofVec2f getSpeed() const;
+	ofVec2f getAcceleration() const;
+	
 	void setSpeed(ofVec2f speed);
 	void setAcceleration(ofVec2f acceleration);
 	
