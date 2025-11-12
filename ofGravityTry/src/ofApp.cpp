@@ -46,24 +46,6 @@ void ofApp::setup(){
 	_physicalSpace.addObject(blueCircle);
 	_physicalSpace.addObject(whiteCircle);
 	_physicalSpace.addObject(redCircle);
-
-	// for (int i = 0; i < 50; ++i)
-	// {
-	// 	auto circle = ofPhysicalCircle();
-	// 	circle.setup(
-	// 		ofRandom(ofGetWindowWidth()),
-	// 		ofRandom(ofGetWindowHeight()),
-	// 		ofRandom(50),
-	// 		ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255),
-	// 		ofVec2f(ofRandom(-100, 100), ofRandom(-100, 100)),
-	// 		ofVec2f(0.f, 0.f),
-	// 		ofRandom(50.f)
-	// 	);
-	// 	auto weight = ofRandom(20.f);
-	// 	if (weight > 1.f)
-	// 		circle.setDebug(false);
-	// 	_physicalSpace.addObject(circle);
-	// }
 }
 
 //--------------------------------------------------------------
@@ -83,7 +65,23 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+	if (key == OF_KEY_SPACE)
+	{
+		auto circle = ofPhysicalCircle();
+		circle.setup(
+			ofRandom(ofGetWindowWidth()),
+			ofRandom(ofGetWindowHeight()),
+			ofRandom(50),
+			ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255),
+			ofVec2f(ofRandom(-100, 100), ofRandom(-100, 100)),
+			ofVec2f(0.f, 0.f),
+			ofRandom(50.f)
+		);
+		auto weight = ofRandom(5.f);
+		if (weight > 1.f)
+			circle.setDebug(false);
+		_physicalSpace.addObject(circle);
+	}
 }
 
 //--------------------------------------------------------------
