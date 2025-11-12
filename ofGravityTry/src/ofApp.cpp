@@ -17,7 +17,7 @@ void ofApp::setup(){
 		ofColor::blue,
 		ofVec2f(0.f, 0.f),  // Start with no initial speed
 		ofVec2f(0.f, 0.0f), // Start with no acceleration
-		50000.0f              // High mass
+		5000.0f              // High mass
 	);
 
 	// Medium white circle with medium mass
@@ -26,7 +26,7 @@ void ofApp::setup(){
 		ofGetWindowHeight() / 2,
 		10,
 		ofColor::white,
-		ofVec2f(0.f, 200.f),  // Initial orbital speed
+		ofVec2f(0.f, 150.f),  // Initial orbital speed
 		ofVec2f(0.f, 0.f),
 		10.0f
 	);
@@ -37,7 +37,7 @@ void ofApp::setup(){
 		ofGetWindowHeight() / 2,
 		25,
 		ofColor::red,
-		ofVec2f(0.f, -150.f), // Initial orbital speed in opposite direction
+		ofVec2f(0.f, -100.f), // Initial orbital speed in opposite direction
 		ofVec2f(0.f, 0.f),
 		25.0f
 	);
@@ -47,23 +47,23 @@ void ofApp::setup(){
 	_physicalSpace.addObject(whiteCircle);
 	_physicalSpace.addObject(redCircle);
 
-	for (int i = 0; i < 50; ++i)
-	{
-		auto circle = ofPhysicalCircle();
-		circle.setup(
-			ofRandom(ofGetWindowWidth()),
-			ofRandom(ofGetWindowHeight()),
-			ofRandom(50),
-			ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255),
-			ofVec2f(ofRandom(-100, 100), ofRandom(-100, 100)),
-			ofVec2f(0.f, 0.f),
-			ofRandom(50.f)
-		);
-		auto weight = ofRandom(20.f);
-		if (weight > 1.f)
-			circle.setDebug(false);
-		_physicalSpace.addObject(circle);
-	}
+	// for (int i = 0; i < 50; ++i)
+	// {
+	// 	auto circle = ofPhysicalCircle();
+	// 	circle.setup(
+	// 		ofRandom(ofGetWindowWidth()),
+	// 		ofRandom(ofGetWindowHeight()),
+	// 		ofRandom(50),
+	// 		ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255),
+	// 		ofVec2f(ofRandom(-100, 100), ofRandom(-100, 100)),
+	// 		ofVec2f(0.f, 0.f),
+	// 		ofRandom(50.f)
+	// 	);
+	// 	auto weight = ofRandom(20.f);
+	// 	if (weight > 1.f)
+	// 		circle.setDebug(false);
+	// 	_physicalSpace.addObject(circle);
+	// }
 }
 
 //--------------------------------------------------------------
