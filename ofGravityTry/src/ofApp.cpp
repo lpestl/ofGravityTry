@@ -5,6 +5,14 @@ void ofApp::setup(){
 	ofSetWindowTitle("Gravitational Circles");
 	ofSetFrameRate(60);
 
+	_camera.disableOrtho();
+	_camera.enableOrtho();
+    
+	_camera.setPosition(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2, 500);
+    
+	_bCameraMoving = false;
+	_cameraOffset.set(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+	
 	auto blueCircle = ofPhysicalCircle();
 	auto whiteCircle = ofPhysicalCircle();
 	auto redCircle = ofPhysicalCircle();
@@ -50,17 +58,24 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	_camera.setPosition(_cameraOffset.x, _cameraOffset.y, 500);
 	_physicalSpace.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	_camera.begin();
+	
 	_physicalSpace.draw();
+
+	_camera.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (key == 'r') {
+		_cameraOffset.set(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+	}
 }
 
 //--------------------------------------------------------------
@@ -91,17 +106,29 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+	if (_bCameraMoving) {
+		ofVec2f mouseDiff = ofVec2f(x, y) - _lastMousePos;
+        
+		_cameraOffset.x -= mouseDiff.x;
+		_cameraOffset.y += mouseDiff.y;
+        
+		_lastMousePos.set(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	if (button == OF_MOUSE_BUTTON_LEFT) {
+		_bCameraMoving = true;
+		_lastMousePos.set(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+	if (button == OF_MOUSE_BUTTON_LEFT) {
+		_bCameraMoving = false;
+	}
 }
 
 //--------------------------------------------------------------
@@ -116,7 +143,7 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+	_camera.setAspectRatio((float)w / (float)h);
 }
 
 //--------------------------------------------------------------

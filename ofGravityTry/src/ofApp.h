@@ -27,4 +27,9 @@ class ofApp : public ofBaseApp{
 
 	private:
 		ofPhysicalSpace _physicalSpace;
+	
+		ofCamera _camera;
+		bool _bCameraMoving { false };
+		ofVec2f _lastMousePos;
+		ofVec2f _cameraOffset;
 };
