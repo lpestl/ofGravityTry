@@ -33,6 +33,12 @@ void ofPhysicalSpace::draw()
 {
     ofBackground(ofColor::black);
 
+    ofSetColor(255);
+    ofDrawLine(0, 0, ofGetWindowWidth(), 0);
+    ofDrawLine(ofGetWindowWidth(), 0, ofGetWindowWidth(), ofGetWindowHeight());
+    ofDrawLine(ofGetWindowWidth(), ofGetWindowHeight(), 0, ofGetWindowHeight());
+    ofDrawLine(0, ofGetWindowHeight(), 0, 0);
+    
     // Draw trajectories first (behind the circles)
     drawTrajectories();
 
