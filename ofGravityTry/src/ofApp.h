@@ -2,9 +2,9 @@
 
 #include "circle.h"
 #include "ofMain.h"
-#include "ofPhysicalSpace.h"
 #include "shapes/ofGradientCircle.h"
 #include "shapes/ofMovingCircle.h"
+#include "worlds/ofSnakeLevel.h"
 
 class ofApp : public ofBaseApp{
 
@@ -26,7 +26,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 	private:
-		ofPhysicalSpace _physicalSpace;
+		ofSnakeLevel _level;
 	
 		ofCamera _camera;
 		bool _bCameraMoving { false };
