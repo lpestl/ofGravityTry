@@ -37,6 +37,8 @@ void ofApp::keyPressed(int key){
 	if (key == 'r') {
 		_cameraOffset.set(0, 0);
 	}
+
+	_level.keyPressed(key);
 }
 
 //--------------------------------------------------------------
@@ -45,11 +47,13 @@ void ofApp::keyReleased(int key){
 	{
 		
 	}
+
+	_level.keyReleased(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+	_level.mouseMoved(x, y);
 }
 
 //--------------------------------------------------------------
@@ -62,6 +66,8 @@ void ofApp::mouseDragged(int x, int y, int button){
         
 		_lastMousePos.set(x, y);
 	}
+
+	_level.mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
@@ -70,6 +76,8 @@ void ofApp::mousePressed(int x, int y, int button){
 		_bCameraMoving = true;
 		_lastMousePos.set(x, y);
 	}
+
+	_level.mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
@@ -77,16 +85,18 @@ void ofApp::mouseReleased(int x, int y, int button){
 	if (button == OF_MOUSE_BUTTON_LEFT) {
 		_bCameraMoving = false;
 	}
+
+	_level.mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+	_level.mouseEntered(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+	_level.mouseExited(x, y);
 }
 
 //--------------------------------------------------------------

@@ -18,3 +18,50 @@ void ofSnakeLevel::draw()
 
     _circle.draw();
 }
+
+void ofSnakeLevel::keyPressed(int key)
+{
+    switch (key)
+    {
+        case OF_KEY_LEFT:
+            _circle.rotate(1);
+            break;
+        case OF_KEY_RIGHT:
+            _circle.rotate(-1);
+            break;
+        case OF_KEY_UP:
+            break;
+        case OF_KEY_DOWN:
+            break;
+        default:
+            break;
+    }
+}
+
+void ofSnakeLevel::keyReleased(int key)
+{
+}
+
+void ofSnakeLevel::mouseMoved(int x, int y)
+{
+}
+
+void ofSnakeLevel::mouseDragged(int x, int y, int button)
+{
+}
+
+void ofSnakeLevel::mousePressed(int x, int y, int button)
+{
+}
+
+void ofSnakeLevel::mouseReleased(int x, int y, int button)
+{
+}
+
+void ofSnakeLevel::mouseEntered(int x, int y)
+{
+}
+
+void ofSnakeLevel::mouseExited(int x, int y)
+{
+}

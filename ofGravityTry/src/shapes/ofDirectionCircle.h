@@ -10,6 +10,8 @@ public:
     virtual void setup() override;
     virtual void update() override;
     virtual void draw() override;
+    
+    void rotate(double deg);
 
 private:
     ofVec2f _direction { 0.f, 50.f};

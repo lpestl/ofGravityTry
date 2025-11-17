@@ -29,9 +29,14 @@ void ofDirectionCircle::draw()
 
         ofSetColor(ofColor::green);
 		ofTranslate(getPosition());
-        //ofRotate()
+        //ofRotateRad(_direction.angleRad(ofVec2f(0.f, 1.f)));
         ofDrawLine(0, 0, _direction.x, _direction.y);
 
         ofPopMatrix();
     }
+}
+
+void ofDirectionCircle::rotate(double deg)
+{
+    _direction.rotate(deg);
 }

@@ -60,22 +60,23 @@ void ofGradientCircle::update() {
 
 void ofGradientCircle::draw() {
 	// Шейдерная версия - более плавная и эффективная
-	_gradientShader.begin();
+	//_gradientShader.begin();
 
-	_gradientShader.setUniform2f("u_center", 0.5, 0.5);
-	_gradientShader.setUniform1f("u_radius", 0.5);
-	_gradientShader.setUniform4f("u_color",
+	//_gradientShader.setUniform2f("u_center", 0.5, 0.5);
+	//_gradientShader.setUniform1f("u_radius", 0.5);
+	/*_gradientShader.setUniform4f("u_color",
 		_color.r / 255.0f,
 		_color.g / 255.0f,
 		_color.b / 255.0f,
-		_color.a / 255.0f);
+		_color.a / 255.0f);*/
 
 	ofPushMatrix();
-	ofTranslate(getPosition().x, getPosition().y);
+	ofSetColor(_color);
+	ofTranslate(getPosition().x, getPosition().y);	
 	_circleMesh.draw();
 	ofPopMatrix();
 
-	_gradientShader.end();
+	//_gradientShader.end();
 }
 
 void ofGradientCircle::setColor(const ofColor & newColor) {
