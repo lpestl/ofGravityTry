@@ -24,10 +24,10 @@ void ofSnakeLevel::keyPressed(int key)
     switch (key)
     {
         case OF_KEY_LEFT:
-            _circle.rotate(1);
+            _circle.setAngularAcceleration(0.5); // Positive acceleration for left rotation
             break;
         case OF_KEY_RIGHT:
-            _circle.rotate(-1);
+            _circle.setAngularAcceleration(-0.5); // Negative acceleration for right rotation
             break;
         case OF_KEY_UP:
             break;
@@ -40,6 +40,16 @@ void ofSnakeLevel::keyPressed(int key)
 
 void ofSnakeLevel::keyReleased(int key)
 {
+    switch (key)
+    {
+        case OF_KEY_LEFT:
+        case OF_KEY_RIGHT:
+            // Set negative acceleration to smoothly stop rotation
+            _circle.setAngularAcceleration(0.0);
+            break;
+        default:
+            break;
+    }
 }
 
 void ofSnakeLevel::mouseMoved(int x, int y)
