@@ -30,8 +30,10 @@ void ofSnakeLevel::keyPressed(int key)
             _circle.setAngularAcceleration(-0.5); // Negative acceleration for right rotation
             break;
         case OF_KEY_UP:
+            _circle.accelerateInDirection(100.0); // Forward acceleration
             break;
         case OF_KEY_DOWN:
+            // Optional: Add reverse movement if needed
             break;
         default:
             break;
@@ -46,6 +48,9 @@ void ofSnakeLevel::keyReleased(int key)
         case OF_KEY_RIGHT:
             // Set negative acceleration to smoothly stop rotation
             _circle.setAngularAcceleration(0.0);
+            break;
+        case OF_KEY_UP:
+            _circle.stopMovement(); // Smoothly stop forward movement
             break;
         default:
             break;

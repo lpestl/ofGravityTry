@@ -18,6 +18,11 @@ public:
     void setMaxAngularVelocity(double maxVelocity);
     double getAngularVelocity() const;
     void resetAngularPhysics();
+    
+    // Linear movement methods
+    void accelerateInDirection(float acceleration);
+    void setMaxSpeed(float maxSpeed);
+    void stopMovement();
 
 private:
     ofVec2f _direction { 0.f, 50.f};
@@ -27,4 +32,10 @@ private:
     double _angularAcceleration { 0.0 };
     double _maxAngularVelocity { 10.0 }; // degrees per frame
     double _decelerationRate { 0.5 }; // deceleration when no acceleration is applied
+    
+    // Linear movement properties
+    float _maxSpeed { 200.0 }; // maximum speed in pixels per second
+    bool _isAccelerating { false };
+    float _forwardAcceleration { 0.0 };
+    float _decelerationAcceleration { 0.0 };
 };
