@@ -20,9 +20,36 @@ void ofDirectionCircle::update()
 {
     // Handle linear movement
     if (_isAccelerating) {
-        // Apply forward acceleration in the direction the circle is facing
-        ofVec2f accelerationVector = _direction.getNormalized() * _forwardAcceleration;
-        setAcceleration(accelerationVector);
+        // Calculate acceleration vector mirrored relative to direction vector
+        ofVec2f currentSpeed = getSpeed();
+        ofVec2f directionNormalized = _direction.getNormalized();
+        
+        if (currentSpeed.length() > 0.1) {
+            // When moving, mirror acceleration relative to direction vector
+            ofVec2f speedNormalized = currentSpeed.getNormalized();
+            
+            // Calculate the angle between direction and velocity
+            float angleBetween = directionNormalized.angle(speedNormalized);
+            
+            // Mirror the acceleration vector relative to the direction vector
+            // This creates a turning effect when velocity and direction don't align
+            ofVec2f accelerationVector = directionNormalized * _forwardAcceleration;
+            
+            // If there's a significant angle between direction and velocity,
+            // apply some turning force to align them
+            if (std::abs(angleBetween) > 5.0) {
+                // Add a component that helps align velocity with direction
+                float alignmentStrength = 1.f;
+                ofVec2f alignmentVector = (directionNormalized - speedNormalized) * _forwardAcceleration * alignmentStrength;
+                accelerationVector += alignmentVector;
+            }
+            
+            setAcceleration(accelerationVector);
+        } else {
+            // When not moving, just accelerate in the direction we're facing
+            ofVec2f accelerationVector = directionNormalized * _forwardAcceleration;
+            setAcceleration(accelerationVector);
+        }
     } else if (_decelerationAcceleration != 0.0) {
         // Apply deceleration in the opposite direction of movement
         ofVec2f currentSpeed = getSpeed();
@@ -137,7 +164,7 @@ void ofDirectionCircle::stopMovement()
     // Set deceleration to smoothly stop
     ofVec2f currentSpeed = getSpeed();
     if (currentSpeed.length() > 0) {
-        _decelerationAcceleration = 50.0; // deceleration strength
+        _decelerationAcceleration = 500.0; // deceleration strength
     } else {
         setAcceleration(ofVec2f(0, 0));
         _decelerationAcceleration = 0.0;

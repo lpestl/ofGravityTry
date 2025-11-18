@@ -24,13 +24,13 @@ void ofSnakeLevel::keyPressed(int key)
     switch (key)
     {
         case OF_KEY_LEFT:
-            _circle.setAngularAcceleration(0.5); // Positive acceleration for left rotation
+            _circle.setAngularAcceleration(0.2); // Positive acceleration for left rotation
             break;
         case OF_KEY_RIGHT:
-            _circle.setAngularAcceleration(-0.5); // Negative acceleration for right rotation
+            _circle.setAngularAcceleration(-0.2); // Negative acceleration for right rotation
             break;
         case OF_KEY_UP:
-            _circle.accelerateInDirection(100.0); // Forward acceleration
+            _circle.accelerateInDirection(500.0); // Forward acceleration
             break;
         case OF_KEY_DOWN:
             // Optional: Add reverse movement if needed

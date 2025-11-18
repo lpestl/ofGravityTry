@@ -34,7 +34,7 @@ private:
     double _decelerationRate { 0.5 }; // deceleration when no acceleration is applied
     
     // Linear movement properties
-    float _maxSpeed { 200.0 }; // maximum speed in pixels per second
+    float _maxSpeed { 300.0 }; // maximum speed in pixels per second
     bool _isAccelerating { false };
     float _forwardAcceleration { 0.0 };
     float _decelerationAcceleration { 0.0 };
